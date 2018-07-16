@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package HelloWorld;
+
+service Greeting {
+    rpc _Hi(Msg) returns (Rsp) {};
+}
+
+message Msg {
+    string msg = 1;
+}
+
+message Rsp {
+    string msg = 1;
+}
+
