@@ -1,6 +1,16 @@
 # ms-registry
 A registry service in Nodejs for storing information regarding micro-services and the dependencies between them.
 
+## Running the application
+> npm install  
+> npm run build  
+> npm start  
+
+## Running the application in dev-mode
+> npm run dev  
+
+## Installation
+> npm i lib -S
 
 ## ES-Lint
 > npm run lint
