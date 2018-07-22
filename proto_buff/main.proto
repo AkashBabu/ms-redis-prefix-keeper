@@ -1,16 +1,55 @@
 syntax = "proto3";
 
-package HelloWorld;
+package MS;
 
-service Greeting {
-    rpc _Hi(Msg) returns (Rsp) {};
+service Registry {
+    rpc _Register(MSDetails) returns (IDResponse) {};
+    rpc _GetID(Name) returns (IDResponse) {};
+    rpc _GetName(ID) returns (NameResponse) {};
 }
 
-message Msg {
-    string msg = 1;
+// Request Types 
+
+message MSDetails {
+    string id = 1;
+    string name = 2;
+
+    enum Type {
+        UNKNOWN = 0;
+        DATA_GRABBER = 1;
+        DATA_EXPOSER = 2;
+        DATA_GENERIC = 3;
+        UI = 4;
+    }
+    Type type = 3;
+
+    repeated string dependents = 4;
+    repeated string dependencies = 5;
 }
 
-message Rsp {
-    string msg = 1;
+message Name {
+    string name = 1;
 }
 
+message ID {
+    int32 id = 1;
+}
+
+
+
+
+
+
+// Response Type
+
+message IDResponse {
+    bool success = 1;
+    optional int32 data = 2 [default = 0];
+    optional string message = 3 [default = ""];
+}
+
+message NameResponse {
+    bool success = 1;
+    optional string data = 2 [default = ""];
+    optional string message = 3 [default = ""];
+}

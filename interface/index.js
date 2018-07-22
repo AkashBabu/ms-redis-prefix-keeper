@@ -1,12 +1,17 @@
-import GRPCClient from 'grpc-pool'
-import path from 'path'
+const GRPCClient = require('grpc-pool').default;
+const path = require('path');
+const CONFIG = require('../dist/config').default;
 
-const PROTO_PATH = path.join(__dirname, '../proto_buff/main.proto')
+const PROTO_PATH = path.join(__dirname, '../proto_buff/main.proto');
 
-export const client = new GRPCClient(PROTO_PATH, {
+const client = new GRPCClient(PROTO_PATH, {
     maxConnections : 2,
-    packageName    : 'Hello',
-    serviceName    : 'Greeting',
-    url            : 'localhost:50001',
-    prefix         : 'RPC'
+    packageName    : 'MS',
+    serviceName    : 'Registry',
+    url            : `0.0.0.0:${CONFIG.server.port}`,
+    rpcPrefix      : 'Registry',
 });
+
+const { Registry_Register, Registry_GetID, Registry_GetName } = client;
+
+export { Registry_Register, Registry_GetID, Registry_GetName };
