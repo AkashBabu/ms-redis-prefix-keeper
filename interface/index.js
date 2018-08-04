@@ -12,6 +12,4 @@ const client = new GRPCClient(PROTO_PATH, {
     rpcPrefix      : 'Registry',
 });
 
-const { Registry_Register, Registry_GetID, Registry_GetName } = client;
-
-export { Registry_Register, Registry_GetID, Registry_GetName };
+module.exports = client;
