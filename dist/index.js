@@ -5,8 +5,6 @@ var _Register2 = require('./rpc/_Register');var _Register3 = _interopRequireDefa
 var _GetMS2 = require('./rpc/_GetMS');var _GetMS3 = _interopRequireDefault(_GetMS2);
 var _Deregister2 = require('./rpc/_Deregister');var _Deregister3 = _interopRequireDefault(_Deregister2);
 var _logger = require('./lib/logger');var _logger2 = _interopRequireDefault(_logger);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-// import GetID from './rpc/getID';
-// import GetName from './rpc/getName';
 
 var PROTO_PATH = _path2.default.join(__dirname, '../proto_buff/main.proto');
 
@@ -15,10 +13,8 @@ var Registry = _grpc2.default.load(PROTO_PATH).MS.Registry;
 var RegistryService = {
     _Register: _Register3.default,
     _GetMS: _GetMS3.default,
-    _Deregister: _Deregister3.default
-    // _GetID    : GetID,
-    // _GetName  : GetName,
-};
+    _Deregister: _Deregister3.default };
+
 
 function main() {
     var server = new _grpc2.default.Server();

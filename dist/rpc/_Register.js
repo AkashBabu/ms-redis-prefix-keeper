@@ -10,15 +10,13 @@ var _constants = require('../constants');function _interopRequireDefault(obj) {r
                         // If Not already present, then create a new entry
                         result = void 0;if (
                         existingMS) {_context.next = 18;break;}_context.next = 10;return (
-
                             (0, _registry.GetMaxID)());case 10:_context.t0 = _context.sent;msDetails.id = _context.t0 + 1;
                         msDetails.type = _constants.MS_TYPE[msDetails.type];_context.next = 15;return (
                             (0, _registry.SaveMS)(msDetails));case 15:result = _context.sent;_context.next = 23;break;case 18:if (!
                         msDetails._override) {_context.next = 23;break;}
                         delete msDetails.id;
-                        delete msDetails._override;
-                        // logger.debug('Overriding MS:', msDetails);
-                        _context.next = 23;return (0, _registry.OverrideMS)(msDetails, { key: 'name' });case 23:
+                        delete msDetails._override;_context.next = 23;return (
+                            (0, _registry.OverrideMS)(msDetails, { key: 'name' }));case 23:
 
 
                         cb(null, {
