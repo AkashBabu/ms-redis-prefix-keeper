@@ -1,8 +1,8 @@
-import { GetMS, SaveMS, GetMaxID } from '../models/registry';
+import { GetMS, SaveMS, GetMaxID, OverrideMS } from '../models/registry';
 import logger from '../lib/logger';
 import { MS_TYPE } from '../constants';
 
-export default async function Register({ request: msDetails }, cb) {
+export default async function _Register({ request: msDetails }, cb) {
     try {
         // Check if already existing
         const [existingMS] = await GetMS({ name: msDetails.name });
@@ -13,6 +13,10 @@ export default async function Register({ request: msDetails }, cb) {
             msDetails.id = await GetMaxID() + 1;
             msDetails.type = MS_TYPE[msDetails.type];
             result = await SaveMS(msDetails);
+        } else if (msDetails._override) {
+            delete msDetails.id;
+            delete msDetails._override;
+            await OverrideMS(msDetails, { key: 'name' });
         }
 
         cb(null, {

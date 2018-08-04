@@ -11,6 +11,19 @@ var CONFIG = (0, _freeze2.default)({
 
 
         server: {
+            port: 50004 } },
+
+
+    dev: {
+        db: {
+            mongo: {
+                url: 'mongodb://localhost:27017/registry_dev?maxPoolSize=2',
+                coll: {
+                    registry: 'registry' } } },
+
+
+
+        server: {
             port: 50001 } },
 
 
