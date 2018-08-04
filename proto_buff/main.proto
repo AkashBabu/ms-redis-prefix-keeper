@@ -4,15 +4,15 @@ package MS;
 
 service Registry {
     rpc _Register(MSDetails) returns (IDResponse) {};
-    rpc _GetID(Name) returns (IDResponse) {};
-    rpc _GetName(ID) returns (NameResponse) {};
+    rpc _Deregister(MSID) returns (GenericResponse) {};
+    rpc _GetMS(MSID) returns (MSDetailsResp) {};
 }
 
 // Request Types 
 
 message MSDetails {
-    string id = 1;
-    string name = 2;
+    int32 id = 1;
+    required string name = 2;
 
     enum Type {
         UNKNOWN = 0;
@@ -25,31 +25,44 @@ message MSDetails {
 
     repeated string dependents = 4;
     repeated string dependencies = 5;
+
+    required string version = 6;
+
+    message Maintainer {
+        required string name = 1;
+        required string email = 2;
+    }
+    repeated Maintainer maintainers = 7;
+
+    // Not to be considered while registering New MS / while getting MS
+    bool _override = 8;
 }
 
-message Name {
-    string name = 1;
+message MSID {
+    oneof idType {
+        int32 id = 1;
+        string name = 2;
+    }
 }
-
-message ID {
-    int32 id = 1;
-}
-
-
-
 
 
 
 // Response Type
 
-message IDResponse {
+message GenericResponse {
     bool success = 1;
-    optional int32 data = 2 [default = 0];
-    optional string message = 3 [default = ""];
+    string data = 2;
+    string message = 3;
 }
 
-message NameResponse {
+message IDResponse {
     bool success = 1;
-    optional string data = 2 [default = ""];
-    optional string message = 3 [default = ""];
+    int32 data = 2;
+    string message = 3;
+}
+
+message MSDetailsResp {
+    bool success = 1;
+    MSDetails msDetails = 2;
+    string message = 3;
 }
