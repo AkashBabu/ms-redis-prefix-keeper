@@ -1,0 +1,13 @@
+.nyc_output/
+benchmark/
+Dockerfile
+node_modules/*
+.cache/*
+dist/*
+.codeclimate.yml
+.travis.yml
+*.md
+.eslintrc
+.gitignore
+.npmignore
+.git/*
