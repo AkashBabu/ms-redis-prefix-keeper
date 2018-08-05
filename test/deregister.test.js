@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 
 // Run the gRPC-Server
-import '../src';
+import '../dist';
 
-import db from '../src/db/mongo';
+import db from '../dist/db/mongo';
 
 import { Registry_Register, Registry_Deregister, Registry_GetMS } from '../interface';
 
