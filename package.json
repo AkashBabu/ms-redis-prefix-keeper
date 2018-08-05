@@ -6,7 +6,7 @@
     "scripts": {
         "_test": "mocha --require babel-core/register --require babel-polyfill test/**/*.test.js",
         "_test:exit": "npm run _test -- --exit",
-        "test": "export NODE_ENV=test && npm run _test:exit",
+        "test": "export NODE_ENV=test && npm run build && npm run _test:exit",
         "test:dev": "export NODE_ENV=test &&  npm run _test -- -w",
         "test:grep": "export NODE_ENV=test &&  npm run _test -- -g ",
         "coverage": "export NODE_ENV=test && nyc -- npm run _test:exit",
@@ -36,7 +36,9 @@
         "status"
     ],
     "nodemonConfig": {
-        "ignore": ["test/*"]
+        "ignore": [
+            "test/*"
+        ]
     },
     "devDependencies": {
         "babel-cli": "^6.26.0",
@@ -69,7 +71,7 @@
         "grpc-pool": "git+https://github.com/AkashBabu/lib-grpc-client-pool.git",
         "interface-logger": "git+https://github.com/AkashBabu/interface-logger.git",
         "lib-env": "git+https://github.com/AkashBabu/lib-env.git",
-        "lib-promisify": "git+ssh://git@github.com/AkashBabu/lib-promisify.git",
+        "lib-promisify": "git+https://github.com/AkashBabu/lib-promisify.git",
         "mongojs": "^2.6.0",
         "only": "0.0.2"
     }
