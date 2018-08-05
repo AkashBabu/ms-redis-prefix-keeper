@@ -4,7 +4,7 @@ const CONFIG = Object.freeze({
     test: {
         db: {
             mongo: {
-                url  : 'mongodb://localhost:27017/registry_test?maxPoolSize=2',
+                url  : 'mongodb://192.168.1.60:27017/registry_test?maxPoolSize=2',
                 coll : {
                     registry: 'registry',
                 },
@@ -17,7 +17,7 @@ const CONFIG = Object.freeze({
     dev: {
         db: {
             mongo: {
-                url  : 'mongodb://localhost:27017/registry_dev?maxPoolSize=2',
+                url  : 'mongodb://192.168.1.60:27017/registry_dev?maxPoolSize=2',
                 coll : {
                     registry: 'registry',
                 },
@@ -30,7 +30,7 @@ const CONFIG = Object.freeze({
     staging: {
         db: {
             mongo: {
-                url  : 'mongodb://localhost:27017/registry_staging?maxPoolSize=2',
+                url  : 'mongodb://192.168.1.60:27017/registry_staging?maxPoolSize=2',
                 coll : {
                     registry: 'registry',
                 },
@@ -43,7 +43,7 @@ const CONFIG = Object.freeze({
     production: {
         db: {
             mongo: {
-                url  : 'mongodb://localhost:27017/registry?maxPoolSize=5',
+                url  : 'mongodb://192.168.1.60:27017/registry?maxPoolSize=5',
                 coll : {
                     registry: 'registry',
                 },
@@ -52,8 +52,7 @@ const CONFIG = Object.freeze({
         server: {
             port: 10001,
         },
-    }
-    ,
+    },
 })[GetENV()];
 
 export default CONFIG;

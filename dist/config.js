@@ -4,7 +4,7 @@ var CONFIG = (0, _freeze2.default)({
     test: {
         db: {
             mongo: {
-                url: 'mongodb://localhost:27017/registry_test?maxPoolSize=2',
+                url: 'mongodb://192.168.1.60:27017/registry_test?maxPoolSize=2',
                 coll: {
                     registry: 'registry' } } },
 
@@ -17,7 +17,7 @@ var CONFIG = (0, _freeze2.default)({
     dev: {
         db: {
             mongo: {
-                url: 'mongodb://localhost:27017/registry_dev?maxPoolSize=2',
+                url: 'mongodb://192.168.1.60:27017/registry_dev?maxPoolSize=2',
                 coll: {
                     registry: 'registry' } } },
 
@@ -30,7 +30,7 @@ var CONFIG = (0, _freeze2.default)({
     staging: {
         db: {
             mongo: {
-                url: 'mongodb://localhost:27017/registry_staging?maxPoolSize=2',
+                url: 'mongodb://192.168.1.60:27017/registry_staging?maxPoolSize=2',
                 coll: {
                     registry: 'registry' } } },
 
@@ -43,7 +43,7 @@ var CONFIG = (0, _freeze2.default)({
     production: {
         db: {
             mongo: {
-                url: 'mongodb://localhost:27017/registry?maxPoolSize=5',
+                url: 'mongodb://192.168.1.60:27017/registry?maxPoolSize=5',
                 coll: {
                     registry: 'registry' } } },
 
@@ -51,7 +51,6 @@ var CONFIG = (0, _freeze2.default)({
 
         server: {
             port: 10001 } } })[
-
 
 
 (0, _libEnv.GetENV)()];exports.default =
