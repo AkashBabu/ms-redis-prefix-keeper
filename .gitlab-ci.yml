@@ -1,19 +1,15 @@
 stages:
-  - test
+  - testBuild
 
 services:
   - mongo
 
 # TODO: Variables for Mongo_URL
 
-test:
-  stage: test
-  variables:
-    ENV: docker_test
-  before_script:
-    - npm i
+testBuild:
+  stage: testBuild
   script:
-    - npm test
+    - docker build -t ms-registry:test --build-arg ENV=docker_test .
   only:
     - master
   except:
