@@ -1,0 +1,20 @@
+stages:
+  - test
+
+services:
+  - mongo
+
+# TODO: Variables for Mongo_URL
+
+test:
+  stage: test
+  variables:
+    ENV: docker_test
+  before_script:
+    - npm i
+  script:
+    - npm test
+  only:
+    - master
+  except:
+    - tags  
