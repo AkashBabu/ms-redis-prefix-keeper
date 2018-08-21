@@ -8,12 +8,13 @@ testBuild:
   stage: testBuild
   services:
     - docker:dind
-    - mongo
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_DRIVER: overlay2
   before_script:
     - docker info
+    - docker pull mongo
+    - docker run --rm -d -p27017:27017 --name mongo mongo
   script:
     - docker build -t ms-registry:test .
   only:
