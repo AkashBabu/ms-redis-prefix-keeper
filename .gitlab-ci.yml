@@ -4,7 +4,7 @@ stages:
 # TODO: Variables for Mongo_URL
 
 testBuild:
-  # image: docker:latest
+  image: docker:latest
   stage: testBuild
   services:
     - docker:dind
