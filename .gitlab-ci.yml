@@ -1,15 +1,19 @@
 stages:
   - testBuild
 
+# TODO: Variables for Mongo_URL
+
 testBuild:
-  image: docker:stable
+  image: docker:latest
+  stage: testBuild
   services:
-    - docker:dind
+    # - docker:dind
     - mongo
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_DRIVER: overlay2
-  stage: testBuild
+  before_script:
+    - docker info
   script:
     - docker build -t ms-registry:test .
   only:
