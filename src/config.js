@@ -1,10 +1,23 @@
 import { GetENV } from 'lib-env';
 
 const CONFIG = Object.freeze({
+    docker_test: {
+        db: {
+            mongo: {
+                url  : 'mongodb://mongo/registry_test?maxPoolSize=2',
+                coll : {
+                    registry: 'registry',
+                },
+            },
+        },
+        server: {
+            port: 50004,
+        },
+    },
     test: {
         db: {
             mongo: {
-                url  : 'mongodb://192.168.1.60:27017/registry_test?maxPoolSize=2',
+                url  : 'mongodb://192.168.1.4:27017/registry_test?maxPoolSize=2',
                 coll : {
                     registry: 'registry',
                 },
@@ -43,7 +56,7 @@ const CONFIG = Object.freeze({
     production: {
         db: {
             mongo: {
-                url  : 'mongodb://192.168.1.60:27017/registry?maxPoolSize=5',
+                url  : 'mongodb://mongo/registry?maxPoolSize=5',
                 coll : {
                     registry: 'registry',
                 },

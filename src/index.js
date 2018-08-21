@@ -20,7 +20,7 @@ function main() {
     const server = new grpc.Server();
     server.addService(Registry.service, RegistryService);
     logger.info('Server starting on port:', CONFIG.server.port);
-    server.bind(`0.0.0.0:${CONFIG.server.port}`, grpc.ServerCredentials.createInsecure());
+    server.bind(`0.0.0.0:${process.env.PORT || CONFIG.server.port}`, grpc.ServerCredentials.createInsecure());
     server.start();
 }
 

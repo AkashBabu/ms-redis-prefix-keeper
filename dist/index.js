@@ -20,7 +20,7 @@ function main() {
     var server = new _grpc2.default.Server();
     server.addService(Registry.service, RegistryService);
     _logger2.default.info('Server starting on port:', _config2.default.server.port);
-    server.bind('0.0.0.0:' + _config2.default.server.port, _grpc2.default.ServerCredentials.createInsecure());
+    server.bind('0.0.0.0:' + (process.env.PORT || _config2.default.server.port), _grpc2.default.ServerCredentials.createInsecure());
     server.start();
 }
 
