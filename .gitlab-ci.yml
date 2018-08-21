@@ -1,8 +1,6 @@
 stages:
   - testBuild
 
-# TODO: Variables for Mongo_URL
-
 testBuild:
   image: docker:stable
   services:
@@ -13,7 +11,7 @@ testBuild:
     DOCKER_DRIVER: overlay2
   stage: testBuild
   script:
-    - docker build -t ms-registry:test --build-arg ENV=docker_test .
+    - docker build -t ms-registry:test .
   only:
     - master
   except:

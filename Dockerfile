@@ -1,6 +1,5 @@
 # Stage-0 (Build & Test)
 FROM node:latest as test
-ARG ENV=test
 
 RUN mkdir /ms-registry
 WORKDIR /ms-registry
@@ -13,7 +12,7 @@ ADD . .
 
 ENV NODE_ENV=${ENV}
 RUN ["npm", "run", "build"]
-RUN ["npm", "test"]
+RUN ["npm", "run", "test:docker"]
 
 
 
