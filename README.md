@@ -31,10 +31,3 @@ This command removes dist/ folder and builds it from the contents in src/ folder
 
 ## Contributions
 This is open-source, which makes it obvious for any PRs, but I would request you to add necessary test-cases for the same 
-
-
-## TODO
-[ ] Health Check
-[ ] Version support
-[ ] Maintainers support
-[ ] Wiki page Documentation
