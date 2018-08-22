@@ -8,6 +8,9 @@ image: 'docker:latest'
 services:
   - 'docker:dind'
 
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  
 variables:
   PROJECT_NAME: ms-registry
   IMAGE_TAG: $CI_PROJECT_PATH:$CI_COMMIT_REF_NAME
@@ -31,6 +34,7 @@ test:
     - docker network create --driver bridge mongo
     - docker run -d --name mongo --net mongo --expose 27017 --rm mongo
   script:
+    - 'docker build -t $IMAGE_TAG .'
     - 'docker run -d --net mongo --rm --name $PROJECT_NAME $IMAGE_TAG'
     - 'docker exec $PROJECT_NAME $TEST_CMD'
   only:
@@ -41,9 +45,8 @@ test:
 push:
   stage: push
 
-  before_script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   script:
+    - 'docker build -t $IMAGE_TAG .'
     - docker push $IMAGE_TAG
   only:
     - master
