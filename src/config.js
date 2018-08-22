@@ -4,7 +4,7 @@ const CONFIG = Object.freeze({
     docker_test: {
         db: {
             mongo: {
-                url  : 'mongodb://localhost:27017/registry_test?maxPoolSize=2',
+                url  : 'mongodb://mongo/registry_test?maxPoolSize=2',
                 coll : {
                     registry: 'registry',
                 },
@@ -17,7 +17,7 @@ const CONFIG = Object.freeze({
     test: {
         db: {
             mongo: {
-                url  : 'mongodb://192.168.1.4:27017/registry_test?maxPoolSize=2',
+                url  : 'mongodb://mongo/registry_test?maxPoolSize=2',
                 coll : {
                     registry: 'registry',
                 },

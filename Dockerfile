@@ -12,7 +12,7 @@ ADD . .
 
 ENV NODE_ENV=${ENV}
 RUN ["npm", "run", "build"]
-RUN ["npm", "run", "test:docker"]
+# RUN ["npm", "run", "test:docker"]
 
 
 
@@ -37,7 +37,7 @@ LABEL name="registry-store"
 
 RUN mkdir /ms-registry
 WORKDIR /ms-registry
-COPY --from=prod /ms-registry/node_modules ./node_modules
+COPY --from=test /ms-registry/node_modules ./node_modules
 RUN ["npm", "rebuild"]
 
 COPY --from=test /ms-registry/dist ./dist

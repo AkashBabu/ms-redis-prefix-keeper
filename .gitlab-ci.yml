@@ -13,10 +13,14 @@ testBuild:
     DOCKER_DRIVER: overlay2
   before_script:
     - docker info
+    - docker network create --driver bridge mongo
     - docker pull mongo
-    - docker run --rm -d -p27017:27017 --name mongo mongo
+    - docker run --rm -d --hostname mongo --name mongo --net mongo --expose 27017 mongo
   script:
     - docker build -t ms-registry:test .
+    - docker run -d --net mongo --rm --name ms-registry ms-registry:test
+    - docker network inspect mongo
+    - docker exec -it ms-registry npm run test:docker
   only:
     - master
   except:
