@@ -9,6 +9,9 @@ services:
   - 'docker:dind'
 
 before_script:
+  - echo $CI_PROJECT_PATH
+  - echo $CI_PROJECT_NAMESPACE
+  - echo $CI_PROJECT_NAME
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   
 variables:
@@ -20,7 +23,7 @@ build:
   script:
     - 'docker build -t $IMAGE_TAG .'
     - mkdir /docker-images
-    - docker save -o /docker-images/$PROJECT_NAME $IMAGE_TAG
+    - docker save -o /docker-images/ms-registry.tar $IMAGE_TAG
   artifacts:
     paths:
       - /docker-images
@@ -38,7 +41,7 @@ test:
     - docker pull mongo
     - docker network create --driver bridge mongo
     - docker run -d --name mongo --net mongo --expose 27017 --rm mongo
-    - docker load < /docker-images/$PROJECT_NAME
+    - docker load < /docker-images/ms-registry.tar
   script:
     - 'docker run -d --net mongo --rm --name $PROJECT_NAME $IMAGE_TAG'
     - 'docker exec $PROJECT_NAME $TEST_CMD'
@@ -51,7 +54,7 @@ push:
   stage: push
 
   before_script:
-    - docker load < /docker-images/$PROJECT_NAME
+    - docker load < /docker-images/ms-registry.tar
   script:
     - docker push $IMAGE_TAG
   only:
