@@ -9,8 +9,8 @@ services:
   - 'docker:dind'
 
 variables:
-  IMAGE_NAME: registry.gitlab.com/akashbabu256/$CI_PROJECT_NAME
-  IMAGE_TAG: $IMAGE_NAME:$CI_COMMIT_REF_NAME
+  IMAGE_NAME: "registry.gitlab.com/akashbabu256/$CI_PROJECT_NAME"
+  IMAGE_TAG: "$IMAGE_NAME:$CI_COMMIT_REF_NAME"
 
 build:
   stage: build
