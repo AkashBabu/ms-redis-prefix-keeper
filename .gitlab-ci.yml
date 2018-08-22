@@ -9,8 +9,9 @@ services:
   - 'docker:dind'
 
 variables:
-  IMAGE_NAME: "registry.gitlab.com/akashbabu256/$CI_PROJECT_NAME"
-  IMAGE_TAG: "$IMAGE_NAME:$CI_COMMIT_REF_NAME"
+  PROJECT_NAME: ms-registry
+  IMAGE_NAME: registry.gitlab.com/akashbabu256/$PROJECT_NAME
+  IMAGE_TAG: $IMAGE_NAME:$CI_COMMIT_REF_NAME
 
 build:
   stage: build
@@ -31,8 +32,8 @@ test:
     - docker network create --driver bridge mongo
     - docker run -d --name mongo --net mongo --expose 27017 --rm mongo
   script:
-    - 'docker run -d --net mongo --rm --name $CI_PROJECT_NAME $IMAGE_TAG'
-    - 'docker exec $CI_PROJECT_NAME $TEST_CMD'
+    - 'docker run -d --net mongo --rm --name $PROJECT_NAME $IMAGE_TAG'
+    - 'docker exec $PROJECT_NAME $TEST_CMD'
   only:
     - master
   except:
