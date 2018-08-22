@@ -16,17 +16,17 @@ before_script:
   
 variables:
   PROJECT_NAME: ms-registry
-  IMAGE_TAG: $CI_PROJECT_PATH:$CI_COMMIT_REF_NAME
+  IMAGE_TAG: $CI_REGISTRY/'$CI_PROJECT_PATH:$CI_COMMIT_REF_NAME'
 
 build:
   stage: build
   script:
     - 'docker build -t $IMAGE_TAG .'
     - mkdir /docker-images
-    - docker save -o /docker-images/ms-registry.tar $IMAGE_TAG
+    - docker save -o ms-registry.tar $IMAGE_TAG
   artifacts:
-    paths:
-      - /docker-images
+    expire_in: 1h
+    untracked: true
   only:
     - master
   except:
@@ -45,6 +45,8 @@ test:
   script:
     - 'docker run -d --net mongo --rm --name $PROJECT_NAME $IMAGE_TAG'
     - 'docker exec $PROJECT_NAME $TEST_CMD'
+  dependencies:
+    - build
   only:
     - master
   except:
@@ -57,6 +59,8 @@ push:
     - docker load < /docker-images/ms-registry.tar
   script:
     - docker push $IMAGE_TAG
+  dependencies:
+    - build
   only:
     - master
   except:
