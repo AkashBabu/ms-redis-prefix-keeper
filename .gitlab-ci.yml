@@ -19,6 +19,7 @@ build:
   stage: build
   script:
     - 'docker build -t $IMAGE_TAG .'
+    - mkdir /docker-images
     - docker save -o /docker-images/$PROJECT_NAME $IMAGE_TAG
   artifacts:
     paths:
