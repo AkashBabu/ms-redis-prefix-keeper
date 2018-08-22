@@ -10,8 +10,7 @@ services:
 
 variables:
   PROJECT_NAME: ms-registry
-  IMAGE_NAME: $CI_PROJECT_PATH
-  IMAGE_TAG: $IMAGE_NAME:$CI_COMMIT_REF_NAME
+  IMAGE_TAG: $CI_PROJECT_PATH:$CI_COMMIT_REF_NAME
 
 build:
   stage: build
