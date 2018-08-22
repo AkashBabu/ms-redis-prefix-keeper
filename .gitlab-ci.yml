@@ -16,7 +16,7 @@ before_script:
   
 variables:
   PROJECT_NAME: ms-registry
-  IMAGE_TAG: $CI_REGISTRY/'$CI_PROJECT_PATH:$CI_COMMIT_REF_NAME'
+  IMAGE_TAG: $CI_REGISTRY/$CI_PROJECT_PATH:$CI_COMMIT_REF_NAME
 
 build:
   stage: build
