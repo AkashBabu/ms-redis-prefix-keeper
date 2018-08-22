@@ -17,14 +17,14 @@ RUN ["npm", "run", "build"]
 
 
 
-# Stage-1 (Installing only prod dependencies)
-FROM node:latest as prod
+# # Stage-1 (Installing only prod dependencies)
+# FROM node:latest as prod
 
-RUN mkdir /ms-registry
-WORKDIR /ms-registry
+# RUN mkdir /ms-registry
+# WORKDIR /ms-registry
 
-ADD package.json .
-RUN ["npm", "i", "--only=production"]
+# ADD package.json .
+# RUN ["npm", "i", "--only=production"]
 
 
 
