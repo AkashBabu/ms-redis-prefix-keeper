@@ -10,7 +10,7 @@ services:
 
 variables:
   PROJECT_NAME: ms-registry
-  IMAGE_NAME: registry.gitlab.com/akashbabu256/$PROJECT_NAME
+  IMAGE_NAME: $CI_PROJECT_PATH
   IMAGE_TAG: $IMAGE_NAME:$CI_COMMIT_REF_NAME
 
 build:
