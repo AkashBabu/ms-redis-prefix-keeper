@@ -20,7 +20,7 @@ testBuild:
     - docker build -t ms-registry:test .
     - docker run -d --net mongo --rm --name ms-registry ms-registry:test
     - docker network inspect mongo
-    - docker exec -it ms-registry npm run test:docker
+    - docker exec ms-registry npm run test:docker
   only:
     - master
   except:
