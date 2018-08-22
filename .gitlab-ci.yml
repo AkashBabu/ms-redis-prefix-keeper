@@ -1,27 +1,51 @@
 stages:
-  - testBuild
+  - build
+  - test
+  - push
 
-# TODO: Variables for Mongo_URL
+image: 'docker:latest'
 
-testBuild:
-  image: docker:latest
-  stage: testBuild
-  services:
-    - docker:dind
-  variables:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_DRIVER: overlay2
-  before_script:
-    - docker info
-    - docker network create --driver bridge mongo
-    - docker pull mongo
-    - docker run --rm -d --hostname mongo --name mongo --net mongo --expose 27017 mongo
+services:
+  - 'docker:dind'
+
+variables:
+  IMAGE_NAME: registry.gitlab.com/akashbabu256/$CI_PROJECT_NAME
+  IMAGE_TAG: $IMAGE_NAME:$CI_COMMIT_REF_NAME
+
+build:
+  stage: build
   script:
-    - docker build -t ms-registry:test .
-    - docker run -d --net mongo --rm --name ms-registry ms-registry:test
-    - docker network inspect mongo
-    - docker exec ms-registry npm run test:docker
+    - 'docker build -t $IMAGE_TAG .'
   only:
     - master
   except:
-    - tags  
+    - tags
+
+
+test:
+  stage: test
+  variables:
+    TEST_CMD: 'npm run test:docker'
+  before_script:
+    - docker pull mongo
+    - docker network create --driver bridge mongo
+    - docker run -d --name mongo --net mongo --expose 27017 --rm mongo
+  script:
+    - 'docker run -d --net mongo --rm --name $CI_PROJECT_NAME $IMAGE_TAG'
+    - 'docker exec $CI_PROJECT_NAME $TEST_CMD'
+  only:
+    - master
+  except:
+    - tags
+
+push:
+  stage: push
+
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  script:
+    - docker push $IMAGE_TAG
+  only:
+    - master
+  except:
+    - tags
