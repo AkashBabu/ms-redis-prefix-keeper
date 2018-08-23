@@ -39,7 +39,7 @@ test:
     - docker run -d --name mongo --net mongo --expose 27017 --rm mongo
     - docker load < ms-registry.tar
   script:
-    - 'docker run --entrypoint "" --net mongo --rm $IMAGE_TAG $TEST_CMD'
+    - docker run --entrypoint "" --net mongo --rm $IMAGE_TAG $TEST_CMD
   dependencies:
     - build
   only:
@@ -63,7 +63,11 @@ push:
     - tags
 
 
-publish:
-  stage: publish
+deploy:
+  stage: deploy
   script:
     - docker run --rm aksakalli/mqtt-client pub -h test.mosquitto.org -t "/23r90pahc3f9okj2ew09/deploy/ms-registry" -m "Hello World hey buddy"
+  only:
+    - master
+  except:
+    - tags
