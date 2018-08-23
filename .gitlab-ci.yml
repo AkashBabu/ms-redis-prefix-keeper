@@ -2,6 +2,7 @@ stages:
   - build
   - test
   - push
+  - deploy
 
 image: 'docker:latest'
 
@@ -11,6 +12,7 @@ services:
 variables:
   PROJECT_NAME: ms-registry
   IMAGE_TAG: $CI_REGISTRY/$CI_PROJECT_PATH:$CI_COMMIT_REF_NAME
+  TOPIC_SECRET: 23r90pahc3f9okj2ew09
 
 build:
   stage: build
@@ -37,8 +39,7 @@ test:
     - docker run -d --name mongo --net mongo --expose 27017 --rm mongo
     - docker load < ms-registry.tar
   script:
-    - 'docker run -d --net mongo --rm --name $PROJECT_NAME $IMAGE_TAG'
-    - 'docker exec $PROJECT_NAME $TEST_CMD'
+    - 'docker run --entrypoint "" --net mongo --rm $IMAGE_TAG $TEST_CMD'
   dependencies:
     - build
   only:
@@ -60,3 +61,9 @@ push:
     - master
   except:
     - tags
+
+
+publish:
+  stage: publish
+  script:
+    - docker run --rm aksakalli/mqtt-client pub -h test.mosquitto.org -t "/23r90pahc3f9okj2ew09/deploy/ms-registry" -m "Hello World hey buddy"
