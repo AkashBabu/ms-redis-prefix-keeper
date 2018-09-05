@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 // Run MS-Registry Service
-import '../dist';
+// import '../dist';
 
 import db from '../dist/db/mongo';
 import { Registry_Register, Registry_GetMS } from '../interface';

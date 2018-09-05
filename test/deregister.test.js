@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 // Run the gRPC-Server
-import '../dist';
+// import '../dist';
 
 import db from '../dist/db/mongo';
 
