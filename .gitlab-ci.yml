@@ -19,7 +19,7 @@ test:
     - docker network create --driver bridge mongo
     - docker run -d --name mongo --network mongo --expose 27017 --rm mongo
   script:
-    - docker build --target test -t $TEST_IMAGE_TAG
+    - docker build --target test -t $TEST_IMAGE_TAG .
     - docker run --rm -d --network mongo --name $PROJECT_NAME $TEST_IMAGE_TAG
     - docker exec $PROJECT_NAME $TEST_CMD
   only:
