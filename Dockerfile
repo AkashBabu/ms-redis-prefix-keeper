@@ -6,25 +6,26 @@ WORKDIR /ms-registry
 
 ADD package.json .
 RUN ["npm", "i"]
-# RUN ["npm", "rebuild"]
 
 ADD . .
-
-ENV NODE_ENV=${ENV}
 RUN ["npm", "run", "build"]
-# RUN ["npm", "run", "test:docker"]
+
+ENV NODE_ENV=docker_test
+ENTRYPOINT [ "npm", "start" ]
 
 
 
 
-# # Stage-1 (Installing only prod dependencies)
-# FROM node:latest as prod
+# Stage-1 (Installing only prod dependencies)
+FROM node:latest as dep
 
-# RUN mkdir /ms-registry
-# WORKDIR /ms-registry
+ENV NODE_ENV=production
 
-# ADD package.json .
-# RUN ["npm", "i", "--only=production"]
+RUN mkdir /ms-registry
+WORKDIR /ms-registry
+
+ADD package.json .
+RUN ["npm", "i", "--only=production"]
 
 
 
@@ -37,18 +38,15 @@ LABEL name="registry-store"
 
 RUN mkdir /ms-registry
 WORKDIR /ms-registry
-COPY --from=test /ms-registry/node_modules ./node_modules
+COPY --from=dep /ms-registry/node_modules ./node_modules
 RUN ["npm", "rebuild"]
 
 COPY --from=test /ms-registry/dist ./dist
+
 ADD . .
-# COPY --from=test /ms-registry/node_modules ./node_modules
-# COPY --from=test /ms-registry/dist ./dist
-# COPY --from=test /ms-registry/package.json ./package.json
 
 ENV NODE_ENV=production
-ENV PORT=10001
-EXPOSE ${PORT}
+EXPOSE 10001
 
 ENTRYPOINT [ "npm", "start"]
 
