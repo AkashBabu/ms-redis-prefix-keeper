@@ -1,34 +1,15 @@
 stages:
-  - build
   - test
+  - build
   - push
   - deploy
-
 image: 'docker:latest'
-
 services:
   - 'docker:dind'
-  
 variables:
   PROJECT_NAME: ms-registry
-  IMAGE_TAG: $CI_REGISTRY/$CI_PROJECT_PATH:latest
-  TOPIC_SECRET: 23r90pahc3f9okj2ew09
-
-build:
-  stage: build
-  script:
-    - 'docker build -t $IMAGE_TAG .'
-    - mkdir /docker-images
-    - docker save -o ms-registry.tar $IMAGE_TAG
-  artifacts:
-    expire_in: 1h
-    untracked: true
-  only:
-    - master
-  except:
-    - tags
-
-
+  REL_IMAGE_TAG: '$CI_REGISTRY/$CI_PROJECT_PATH:latest'
+  TEST_IMAGE_TAG: '$CI_REGISTRY/$CI_PROJECT_PATH:test'
 test:
   stage: test
   variables:
@@ -36,37 +17,47 @@ test:
   before_script:
     - docker pull mongo
     - docker network create --driver bridge mongo
-    - docker run -d --name mongo --net mongo --expose 27017 --rm mongo
-    - docker load < ms-registry.tar
+    - docker run -d --name mongo --network mongo --expose 27017 --rm mongo
   script:
-    - docker run --entrypoint "" --net mongo --rm $IMAGE_TAG $TEST_CMD
-  dependencies:
-    - build
+    - docker build --target test -t $TEST_IMAGE_TAG
+    - docker run --rm -d --network mongo --name $PROJECT_NAME $TEST_IMAGE_TAG
+    - docker exec $PROJECT_NAME $TEST_CMD
   only:
     - master
   except:
     - tags
-
+build:
+  stage: build
+  script:
+    - docker build -t $REL_IMAGE_TAG .
+    - docker save -o ms-registry.tar $REL_IMAGE_TAG
+  artifacts:
+    expire_in: 1h
+    untracked: true
+  only:
+    - master
+  except:
+    - tags
 push:
   stage: push
-
   before_script:
     - docker load < ms-registry.tar
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker push $IMAGE_TAG
+    - docker push $REL_IMAGE_TAG
   dependencies:
     - build
   only:
     - master
   except:
     - tags
-
-
 deploy:
   stage: deploy
   script:
-    - "docker run --rm aksakalli/mqtt-client pub -h test.mosquitto.org -t '/324rqndflasdyUHIcoqiwuebrlxiphuiqwerA89T' -m '{\"imageName\": \"$CI_PROJECT_PATH\", \"imageTag\": \"latest\"}'"
+    - >-
+      docker run --rm aksakalli/mqtt-client pub -h test.mosquitto.org -t
+      '/$DEPLOY_TOKEN' -m '{"imageName":
+      "$CI_PROJECT_PATH", "imageTag": "latest"}'
   only:
     - master
   except:
