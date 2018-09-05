@@ -46,7 +46,6 @@
         "babel-core": "^6.26.3",
         "babel-eslint": "^8.2.3",
         "babel-plugin-transform-runtime": "^6.23.0",
-        "babel-polyfill": "^6.26.0",
         "babel-preset-env": "^1.7.0",
         "babel-watch": "^2.0.7",
         "chai": "^4.1.2",
@@ -68,6 +67,7 @@
     "dependencies": {
         "ajv": "^6.5.2",
         "babel-runtime": "^6.26.0",
+        "babel-polyfill": "^6.26.0",
         "grpc": "^1.13.0",
         "grpc-pool": "git+https://github.com/AkashBabu/lib-grpc-client-pool.git",
         "interface-logger": "git+https://github.com/AkashBabu/interface-logger.git",
