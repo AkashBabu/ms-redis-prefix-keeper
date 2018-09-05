@@ -8,8 +8,8 @@ const client = new GRPCClient(PROTO_PATH, {
     maxConnections : 2,
     packageName    : 'MS',
     serviceName    : 'Registry',
-    // url            : `0.0.0.0:${CONFIG.server.port}`,
-    url            : `192.168.1.60:${CONFIG.server.port}`,
+    url            : `${CONFIG.server.host}:${CONFIG.server.port}`,
+    // url            : `192.168.1.60:${CONFIG.server.port}`,
     rpcPrefix      : 'Registry',
 });
 
