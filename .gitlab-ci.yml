@@ -53,14 +53,12 @@ push:
     - tags
 deploy:
   stage: deploy
-  variables:
-    TOKEN_CMD: 'echo $DEPLOY_TOKEN'
   script:
-    - 'eval $TOKEN_CMD'
+    - echo $DEPLOY_TOKEN
     - >-
       docker run --rm aksakalli/mqtt-client pub -h test.mosquitto.org -t
-      '/docker-deploy-mqtt/$DEPLOY_TOKEN' -m '{"imageName":
-      "$CI_PROJECT_PATH", "imageTag": "latest"}'
+      '$DEPLOY_TOKEN' -m '{"imageName": "$CI_PROJECT_PATH",
+      "imageTag": "latest"}'
   only:
     - master
   except:
